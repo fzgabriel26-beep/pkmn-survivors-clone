@@ -139,6 +139,11 @@ G.I18n.add({
   'Empiezas con 2 movimientos': 'Start with 2 moves', 'Máx.': 'Max.',
   'Cada Pokémon tiene sus propias mejoras: sólo cuentan cuando juegas con él.': 'Each Pokémon has its own upgrades: they only count when you play with it.',
   '(compañero)': '(partner)',
+  'Reembolsar oro': 'Refund gold', 'Nada que reembolsar': 'Nothing to refund', 'Pokémonedas': 'PokéCoins',
+  'Devuelve todo el oro invertido en las mejoras de {x} y las pone a nivel 0.': 'Refunds all the gold spent on the upgrades of {x} and sets them back to level 0.',
+  'Reembolsar {x}': 'Refund {x}',
+  '¿Devolver {x} Pokémonedas y poner las mejoras de {x} a nivel 0? No se puede deshacer.': 'Give back {x} PokéCoins and set the upgrades of {x} to level 0? This cannot be undone.',
+  'mejoras reiniciadas': 'upgrades reset',
 
   // ---------------- interactivos y clima ----------------
   '¡Poder {x}! {x} durante {x} s': '{x} power! {x} for {x} s', 'Furia': 'Fury', 'Prisa': 'Haste', 'daño ×2': 'damage ×2', '+45% velocidad': '+45% speed',

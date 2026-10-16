@@ -14,7 +14,7 @@ G.Upgrades = (() => {
     { id: 'coins',  icon: 'coin', name: 'Fortuna',        unit: '+8% Pokémonedas',    max: 8,  base: 120, grow: 1.45 },
     { id: 'moves',  icon: 'cards', name: 'Repertorio',     unit: 'Empiezas con 2 movimientos', max: 1, base: 1500, grow: 1 },
     { id: 'crit',   icon: 'star', name: 'Golpe Crítico',  unit: '+3% de críticos (x1,5 de daño)', max: 10, base: 90, grow: 1.4 },
-    { id: 'reroll', icon: 'up', name: 'Cambio de cartas', unit: '+1 cambio de cartas de nivel por run', max: 5, base: 150, grow: 1.6 },
+    { id: 'reroll', icon: 'up', name: 'Cambio de cartas', unit: '+1 cambio de cartas de nivel por run', max: 11, base: 150, grow: 1.6 },
     { id: 'ban',    icon: 'ban', name: 'Veto',           unit: 'Bloquea 1 movimiento: no te sale en las cartas', max: 3, base: 300, grow: 1.9 }
   ];
   const BY = {};
@@ -23,6 +23,23 @@ G.Upgrades = (() => {
   function cost(id, lvl) {
     const u = BY[id];
     return Math.round(u.base * Math.pow(u.grow, lvl) / 10) * 10;
+  }
+
+  /** Oro que costó subir una mejora hasta el nivel `lvl` (suma de cada nivel). */
+  function spent(id, lvl) {
+    let s = 0;
+    for (let i = 0; i < lvl; i++) s += cost(id, i);
+    return s;
+  }
+
+  /** Oro total invertido en un conjunto de niveles { id -> nivel }. */
+  function spentAll(levels = {}) {
+    let s = 0;
+    for (const id in levels) {
+      const u = BY[id];
+      if (u) s += spent(id, Math.max(0, Math.min(u.max, Math.floor(+levels[id] || 0))));
+    }
+    return s;
   }
 
   /** Niveles comprados -> modificadores para G.Player. */
@@ -46,5 +63,5 @@ G.Upgrades = (() => {
     };
   }
 
-  return { LIST, BY, cost, perks };
+  return { LIST, BY, cost, spent, spentAll, perks };
 })();

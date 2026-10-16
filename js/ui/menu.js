@@ -291,6 +291,36 @@ G.MenuUI = (() => {
       if (u.id === 'ban' && lvl > 0 && banOpen) box.appendChild(banPicker(lvl));
     }
     box.appendChild(bindPanel());
+    box.appendChild(refundPanel());
+  }
+
+  // ---------------- reembolsar: devolver el oro de un Pokémon ----------------
+  // Deshace las mejoras del Pokémon elegido: devuelve todo el oro invertido
+  // (el precio de cada nivel) y las deja a nivel 0. No toca los atajos.
+  function refundPanel() {
+    const total = G.Upgrades.spentAll(G.DB.upgradesOf(upgDex));
+    const mon = G.DEX_BY[upgDex];
+    const el = document.createElement('div');
+    el.className = 'panel bind-panel';
+    el.innerHTML = `<b>Reembolsar oro</b>
+      <p class="sub" style="margin:2px 0 8px">Devuelve todo el oro invertido en las mejoras de ${mon.name} y las pone a nivel 0.</p>
+      <button class="btn small danger" data-refund ${total ? '' : 'disabled'}>
+        ${total ? `<span class="coin"></span> Reembolsar ${total}` : 'Nada que reembolsar'}</button>`;
+    el.querySelector('[data-refund]').onclick = () => {
+      // Se vuelve a leer todo al pulsar (la partida puede haber cambiado).
+      const sv = G.DB.save, lv = G.DB.upgradesOf(upgDex);
+      const amount = G.Upgrades.spentAll(lv);
+      if (!amount) { renderUpgrades(); return; }
+      if (!confirm(`¿Devolver ${amount} Pokémonedas y poner las mejoras de ${mon.name} a nivel 0? No se puede deshacer.`)) return;
+      sv.coins += amount;
+      sv.pupg[upgDex] = {};
+      G.DB.commit(true);
+      G.Audio.sfx('buy');
+      G.UI.refreshCoins();
+      G.UI.toast(`${mon.name}: mejoras reiniciadas · +${amount} Pokémonedas`);
+      renderUpgrades();
+    };
+    return el;
   }
 
   // ---------------- atajos: hueco fijo para cada movimiento ----------------
