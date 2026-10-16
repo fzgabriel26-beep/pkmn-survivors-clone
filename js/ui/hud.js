@@ -282,10 +282,17 @@ G.HUD = (() => {
       if (!m) continue;
 
       if (fused) {
-        // Vínculo: los movimientos en una cuadrícula de 2×2, cada uno con su recarga.
-        const C = 22, P = (S - C * 2) / 3;
+        // Vínculo: los movimientos en cuadrícula (2×2 hasta 4; 3 columnas con 5),
+        // cada uno con su recarga.
+        const cnt = g.length;
+        const cols = cnt <= 4 ? 2 : 3;
+        const rows = Math.ceil(cnt / cols);
+        const gb = 2;
+        const C = Math.floor(Math.min((S - gb * (cols + 1)) / cols, (S - gb * (rows + 1)) / rows));
+        const gw = cols * C + (cols - 1) * gb, gh = rows * C + (rows - 1) * gb;
+        const ox = x + (S - gw) / 2, oy = y + (S - gh) / 2;
         g.forEach((gm, k) => {
-          const cx = x + P + (k % 2) * (C + P), cy = y + P + Math.floor(k / 2) * (C + P);
+          const cx = ox + (k % cols) * (C + gb), cy = oy + Math.floor(k / cols) * (C + gb);
           G.Icons.draw(ctx, 'move:' + gm.id, cx, cy, C);
           const f = cdOf(gm);
           if (f > 0) { ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(cx, cy, C, C * f); }

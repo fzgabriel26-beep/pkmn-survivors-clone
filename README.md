@@ -41,7 +41,7 @@ app ("Añadir a pantalla de inicio"). En **Ajustes** hay sonido, calidad gráfic
 
 El Pokémon ataca solo con el movimiento activo (o con todos los de un
 **vínculo**: cada legendario vencido deja fusionar movimientos para lanzarlos a
-la vez desde un solo hueco, hasta 4). Las rocas, cofres y la hierba
+la vez desde un solo hueco, hasta 5). Las rocas, cofres y la hierba
 alta se rompen; las paredes y los árboles bloquean los disparos enemigos; el
 agua frena y la lava quema (también a los enemigos).
 

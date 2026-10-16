@@ -159,7 +159,7 @@ G.Player = class Player {
   // Cada legendario vencido da un vínculo. Con él se juntan movimientos en un
   // solo hueco y se lanzan a la vez. Sólo crece un grupo (hasta BOND_MAX); si
   // no hay ninguno a medias, el vínculo une dos movimientos sueltos.
-  static get BOND_MAX() { return 4; }
+  static get BOND_MAX() { return 5; }
 
   /** Lo que se puede hacer ahora con un vínculo: añadir a un grupo o unir dos sueltos. */
   bondOptions() {
