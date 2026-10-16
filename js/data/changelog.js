@@ -11,6 +11,9 @@ G.CHANGELOG = [
      'Bonds now hold up to 5 moves in a single slot (was 4). The HUD lays them out in a grid that adapts.'],
     ['"Cambio de cartas" sube hasta 11 niveles (12 cambios por partida). Además, cada Pokémon tiene un botón para reembolsar el oro de sus mejoras, dejarlas a nivel 0 y vaciar su lista de Veto.',
      '"Card reroll" now goes up to 11 levels (12 rerolls per run). Each Pokémon also has a button to refund the gold spent on its upgrades, reset them to level 0 and clear its Ban list.']
+  ], fix: [
+    ['Arreglado: al reembolsar el oro de un Pokémon, al recargar el juego o sincronizar las mejoras volvían a su nivel anterior y el reembolso se podía repetir sin límite. Ahora el reembolso se mantiene.',
+     'Fixed: after refunding the gold of a Pokémon, reloading the game or syncing brought the upgrades back to their previous level and the refund could be repeated endlessly. The refund now sticks.']
   ] },
   { d: '2026-10-15', title: ['Actualizaciones obligatorias', 'Required updates'], chg: [
     ['Cuando una actualización sea obligatoria (por ejemplo, para arreglar un fallo importante), la partida en curso se termina tras un aviso de 10 s y el juego se recarga. No pierdes nada: las monedas, los tickets, los récords y el ranking de esa partida se guardan como al abandonarla.',

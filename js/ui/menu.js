@@ -315,6 +315,8 @@ G.MenuUI = (() => {
       if (!confirm(`¿Devolver ${amount} Pokémonedas y poner las mejoras de ${mon.name} a nivel 0? No se puede deshacer.`)) return;
       sv.coins += amount;
       sv.pupg[upgDex] = {};
+      sv.pupgR = sv.pupgR || {};
+      sv.pupgR[upgDex] = Date.now();   // marca el reembolso: la fusión no lo deshace
       sv.pban = sv.pban || {};
       sv.pban[upgDex] = [];          // el Veto reembolsado pierde su lista
       banOpen = false;

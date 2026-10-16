@@ -81,6 +81,7 @@ G.DB = (() => {
       personality: null,      // { trait, scores }
       upgrades: {},           // (antiguo) mejoras de la cuenta; ahora van por Pokémon
       pupg: {},               // dex -> { id -> nivel }: mejoras de cada Pokémon
+      pupgR: {},              // dex -> fecha: último reembolso (evita que la fusión lo deshaga)
       tickets: { t1: 0, t10: 0 },   // tickets del gacha (x1 y x10)
       pity: {},               // generación del banner -> tiradas sin ★5
       legends: {},            // dex -> fecha: legendarios vencidos en grietas
@@ -166,6 +167,10 @@ G.DB = (() => {
         else u[id] = Math.min(G.Upgrades.BY[id].max, n(u[id]));
       }
     }
+    // Reembolsos por Pokémon: sólo fechas válidas (si no, se borran).
+    if (isObj(s.pupgR)) {
+      for (const d of Object.keys(s.pupgR)) { if (n(s.pupgR[d])) s.pupgR[d] = n(s.pupgR[d]); else delete s.pupgR[d]; }
+    } else s.pupgR = {};
   }
 
   /**
@@ -252,10 +257,22 @@ G.DB = (() => {
       }
     }
     for (const k in older.upgrades || {}) r.upgrades[k] = Math.max(r.upgrades[k] || 0, older.upgrades[k]);
+    // Mejoras por Pokémon. Un reembolso (pupgR) baja los niveles a propósito, así
+    // que el "máximo" no vale: si un lado reembolsó DESPUÉS de la última vez que
+    // se tocó el otro, sus niveles mandan y no se resucitan los del otro (si no,
+    // el reembolso se deshacía al sincronizar y el oro se podía duplicar).
+    r.pupgR = {};
+    for (const src of [a, b]) for (const d in src.pupgR || {}) r.pupgR[d] = Math.max(r.pupgR[d] || 0, num(src.pupgR[d]));
     r.pupg = r.pupg || {};
-    for (const d in older.pupg || {}) {
+    const dexes = new Set([...Object.keys(a.pupg || {}), ...Object.keys(b.pupg || {})]);
+    for (const d of dexes) {
+      const ra = num((a.pupgR || {})[d]), rb = num((b.pupgR || {})[d]);
+      const who = (ra && ra > (b.updated || 0) && ra >= rb) ? a
+                : (rb && rb > (a.updated || 0) && rb > ra) ? b
+                : null;
+      if (who) { r.pupg[d] = JSON.parse(JSON.stringify(who.pupg[d] || {})); continue; }
       const mine = r.pupg[d] = r.pupg[d] || {};
-      for (const k in older.pupg[d]) mine[k] = Math.max(mine[k] || 0, older.pupg[d][k]);
+      for (const src of [a, b]) for (const k in (src.pupg[d] || {})) mine[k] = Math.max(mine[k] || 0, num((src.pupg[d] || {})[k]));
     }
     r.pupgDone = r.pupgDone || older.pupgDone;
     // Lo conseguido nunca se pierde: unión de legendarios, arenas, objetos, logros...
