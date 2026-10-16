@@ -140,7 +140,7 @@ G.I18n.add({
   'Cada Pokémon tiene sus propias mejoras: sólo cuentan cuando juegas con él.': 'Each Pokémon has its own upgrades: they only count when you play with it.',
   '(compañero)': '(partner)',
   'Reembolsar oro': 'Refund gold', 'Nada que reembolsar': 'Nothing to refund', 'Pokémonedas': 'PokéCoins',
-  'Devuelve todo el oro invertido en las mejoras de {x} y las pone a nivel 0.': 'Refunds all the gold spent on the upgrades of {x} and sets them back to level 0.',
+  'Devuelve todo el oro invertido en las mejoras de {x}, las pone a nivel 0 y vacía su lista de Veto.': 'Refunds all the gold spent on the upgrades of {x}, sets them back to level 0 and clears its Ban list.',
   'Reembolsar {x}': 'Refund {x}',
   '¿Devolver {x} Pokémonedas y poner las mejoras de {x} a nivel 0? No se puede deshacer.': 'Give back {x} PokéCoins and set the upgrades of {x} to level 0? This cannot be undone.',
   'mejoras reiniciadas': 'upgrades reset',

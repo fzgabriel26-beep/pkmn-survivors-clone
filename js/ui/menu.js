@@ -296,14 +296,15 @@ G.MenuUI = (() => {
 
   // ---------------- reembolsar: devolver el oro de un Pokémon ----------------
   // Deshace las mejoras del Pokémon elegido: devuelve todo el oro invertido
-  // (el precio de cada nivel) y las deja a nivel 0. No toca los atajos.
+  // (el precio de cada nivel) y las deja a nivel 0. También vacía la lista de
+  // Veto (los atajos de movimientos no se tocan).
   function refundPanel() {
     const total = G.Upgrades.spentAll(G.DB.upgradesOf(upgDex));
     const mon = G.DEX_BY[upgDex];
     const el = document.createElement('div');
     el.className = 'panel bind-panel';
     el.innerHTML = `<b>Reembolsar oro</b>
-      <p class="sub" style="margin:2px 0 8px">Devuelve todo el oro invertido en las mejoras de ${mon.name} y las pone a nivel 0.</p>
+      <p class="sub" style="margin:2px 0 8px">Devuelve todo el oro invertido en las mejoras de ${mon.name}, las pone a nivel 0 y vacía su lista de Veto.</p>
       <button class="btn small danger" data-refund ${total ? '' : 'disabled'}>
         ${total ? `<span class="coin"></span> Reembolsar ${total}` : 'Nada que reembolsar'}</button>`;
     el.querySelector('[data-refund]').onclick = () => {
@@ -314,6 +315,9 @@ G.MenuUI = (() => {
       if (!confirm(`¿Devolver ${amount} Pokémonedas y poner las mejoras de ${mon.name} a nivel 0? No se puede deshacer.`)) return;
       sv.coins += amount;
       sv.pupg[upgDex] = {};
+      sv.pban = sv.pban || {};
+      sv.pban[upgDex] = [];          // el Veto reembolsado pierde su lista
+      banOpen = false;
       G.DB.commit(true);
       G.Audio.sfx('buy');
       G.UI.refreshCoins();
