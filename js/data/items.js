@@ -19,7 +19,7 @@ G.Items = (() => {
       on: p => { p.cdMul *= 0.8; }, off: p => { p.cdMul /= 0.8; } },
     { id: 'focussash', name: 'Banda Focus', desc: 'Un golpe que te dejaría KO te deja con 1 de vida (cada 60 s).',
       on: () => {}, off: () => {} },
-    { id: 'shellbell', name: 'Cascabel Concha', desc: 'Recuperas vida con el daño que haces.',
+    { id: 'shellbell', name: 'Cascabel Concha', desc: 'Curas al instante un 1% del daño que haces.',
       on: () => {}, off: () => {} },
     { id: 'amuletcoin', name: 'Moneda Amuleto', desc: '+50% de Pokémonedas al acabar la run.',
       on: p => { p.coinMul *= 1.5; }, off: p => { p.coinMul /= 1.5; } },

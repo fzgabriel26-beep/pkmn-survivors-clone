@@ -71,7 +71,6 @@ G.Player = class Player {
     this.slowT = 0;            // pegado por una trampa
     this.item = null;          // objeto equipado (data/items.js), uno por run
     this.sashT = -999;         // última vez que salvó la Banda Focus
-    this.bellHeal = 0;         // curación pendiente del Cascabel Concha
     this.statsTaken = {};      // mejoras de stat cogidas (condición de evolución)
   }
 
@@ -291,9 +290,9 @@ G.Player = class Player {
     if (id) G.Items.BY[id].on(this);
   }
 
-  /** Cascabel Concha: un poco de vida por el daño que haces (tope 4/s). */
+  /** Cascabel Concha: curas al instante un 1% del daño que haces. */
   onDealt(dmg) {
-    if (this.item === 'shellbell') this.bellHeal = Math.min(4, this.bellHeal + dmg * 0.04);
+    if (this.item === 'shellbell' && !this.dead) this.hp = Math.min(this.maxHp, this.hp + dmg * 0.01);
   }
 
   /** Poder de un altar (ver systems/interact.js): se aplica y se quita solo. */
@@ -324,7 +323,6 @@ G.Player = class Player {
       if (b.n > 0) { b.t -= dt; if (b.t <= 0) b.n = 0; }
     }
     if (this.slowT > 0) this.slowT -= dt;
-    if (this.bellHeal > 0) { const h = Math.min(this.bellHeal, 4 * dt); this.hp = Math.min(this.maxHp, this.hp + h); this.bellHeal -= h; }
     if (this.power && (this.power.t -= dt) <= 0) { this.power.def.off(this); this.power = null; }
     if (this.regen > 0) this.hp = Math.min(this.maxHp, this.hp + this.regen * dt);
 

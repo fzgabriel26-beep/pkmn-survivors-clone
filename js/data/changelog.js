@@ -6,6 +6,10 @@
  * Cada línea en español y en inglés.
  */
 G.CHANGELOG = [
+  { d: '2026-10-17', title: ['Ajuste del Cascabel Concha', 'Shell Bell tweak'], chg: [
+    ['El Cascabel Concha ahora cura al instante un 1% del daño que haces (antes acumulaba un 4% y lo curaba poco a poco, hasta 4 por segundo).',
+     'The Shell Bell now instantly heals 1% of the damage you deal (it used to bank 4% and heal it slowly, up to 4 per second).']
+  ] },
   { d: '2026-10-16', title: ['Vínculos de 5 y reembolso de mejoras', 'Bonds of 5 and upgrade refund'], chg: [
     ['Los vínculos ahora juntan hasta 5 movimientos en un mismo hueco (antes 4). El HUD los reparte en una cuadrícula que se adapta.',
      'Bonds now hold up to 5 moves in a single slot (was 4). The HUD lays them out in a grid that adapts.'],
